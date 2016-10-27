@@ -33,7 +33,9 @@ include "Tools/HTMLtools.php";
                 debug($_SESSION);
                 if(!($_SESSION['auth']['is_identified'])){
                     $name = isset($_SESSION['auth']['name']) ? $_SESSION['auth']['name'] : "";
-                    echo $_SESSION['auth']['error'] ? $_SESSION['auth']['error'] : "";
+                    if(isset($_SESSION['auth']['error'])){
+                        echo $_SESSION['auth']['error'] ? $_SESSION['auth']['error'] : "";
+                    }
                 ?>
                 <!-- afficher un message d'erreur si l'identification n'est pas correcte -->
                 <ul>

@@ -29,7 +29,7 @@ include "Tools/HTMLtools.php";
 
             <nav>
                 <ul>
-                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="index.php">Accueil</a></li>
 <!-- si l'utilisateur est identifié -->
                     <?php
                     if(($_SESSION['auth']['is_identified'])){

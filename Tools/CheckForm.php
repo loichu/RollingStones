@@ -23,7 +23,7 @@ function CheckText($formName, $frmEntry, $post) {
     if (!empty($_SESSION['forms'][$formName][$frmEntry]['posted_data'])) {
         $_SESSION['forms'][$formName][$frmEntry]['value'] = $_SESSION['forms'][$formName][$frmEntry]['posted_data'];
     } elseif ($_SESSION['forms'][$formName][$frmEntry]['is_required']) {
-        $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Please enter a " . strtolower($_SESSION['forms'][$formName][$frmEntry]['label'] . "...");
+        $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Veuillez entrer quelque chose";
         $_SESSION['forms'][$formName]['error'] = true;
     }
 }
@@ -124,7 +124,7 @@ function CheckCheckbox($formName, $frmEntry, $post) {
     if (isset($post[$frmEntryPostName])) {
         foreach ($post[$frmEntryPostName] as $value) {
             if (!array_key_exists($value, $_SESSION['forms'][$formName][$frmEntry]['values'])) {
-                $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "This value doesn't exists !";
+                $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Cette valeur n'existe pas !";
                 $_SESSION['forms'][$formName]['error'] = true;
             } else {
                 $_SESSION['forms'][$formName][$frmEntry]['is_selected'][] = $value;
@@ -134,7 +134,7 @@ function CheckCheckbox($formName, $frmEntry, $post) {
 
     // Si aucune valeur n'a été postée message d'erreur.
     if (!isset($post[$frmEntryPostName]) && $_SESSION['forms'][$formName][$frmEntry]['is_required']) {
-        $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Please select at least one value for " . strtolower($_SESSION['forms'][$formName][$frmEntry]['label'] . "...");
+        $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Veuillez sélectionner au moins une valeur";
         $_SESSION['forms'][$formName]['error'] = true;
     }
 }
@@ -159,7 +159,7 @@ function CheckMultipleChoice($formName, $frmEntry, $post) {
     // Si la valeur existe, la stocker. Sinon message d'erreur.
     if (isset($post[$frmEntry])) {
         if (!array_key_exists($value, $_SESSION['forms'][$formName][$frmEntry]['values'])) {
-            $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "This value doesn't exists !";
+            $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Cette valeur n'existe pas !";
             $_SESSION['forms'][$formName]['error'] = true;
         } elseif ($value != "default") {
             $_SESSION['forms'][$formName][$frmEntry]['is_selected'] = $value;
@@ -168,7 +168,7 @@ function CheckMultipleChoice($formName, $frmEntry, $post) {
 
     // Si aucune valeur n'a été postée message d'erreur.
     if (!isset($post[$frmEntry]) && $_SESSION['forms'][$formName][$frmEntry]['is_required'] || $value == "default") {
-        $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Please select a value for " . strtolower($_SESSION['forms'][$formName][$frmEntry]['label'] . "...");
+        $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Veuillez sélectionner une valeur";
         $_SESSION['forms'][$formName]['error'] = true;
     }
 }
@@ -219,10 +219,10 @@ foreach ($_SESSION['forms'] as $formName => $formEntry) {
     $report = $_SESSION['forms'][$formName]['error'] == true ? "Il y a une faute quelque part dans $formName !" : "Tout juste pour $formName !";
     echo $report;
 }
-if(!$_SESSION['forms'][$formName]['error']){
+if (!$_SESSION['forms'][$formName]['error']) {
     $_SESSION['quizz']['current'] ++;
-    header("Location:../quizz.php");
 }
+header("Location:../quizz.php");
 // Debug
 debug($_POST, "POST:");
 debug($_SESSION, "SESSION:");

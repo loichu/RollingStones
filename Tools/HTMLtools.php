@@ -65,7 +65,7 @@ function Select($frmName, $fieldLabel, $fieldName, $fieldValues, $isRequired = f
     $select .= "\t<td>\n";
     $select .= "\t\t<select name='$fieldName'>\n";
     foreach ($fieldValues as $value => $displayed) {
-        $select .= "\t\t\t<option value='$value'";
+        $select .= "\t\t\t<option value='$value' ";
         $select .= ($_SESSION["forms"][$frmName][$fieldName]['is_selected'] == $value) ? ' selected="selected"' : "";
         $select .= $value == "default" ? "disabled='disabled' selected='selected'" : "";
         $select .= ">$displayed</option>\n";
