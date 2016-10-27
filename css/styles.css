@@ -1,0 +1,18 @@
+body{background-color: whitesmoke;}
+#entete .sous-titre, header .sous-titre {color:whitesmoke;}
+#entete h1, header h1{color:red;}
+
+#navigation, nav{color:whitesmoke;}
+#navigation strong, nav strong {color: lightgrey;}
+
+
+#contenu, section {background-color: white;}
+#contenu th, section th {text-align: center;}
+#tableau { border-collapse: collapse; }
+#tableau th, #tableau td {
+    border-width : 1px;
+    border : solid lightgrey;
+}
+
+#copyright {color:whitesmoke}
+#copyright a {color:grey;}
