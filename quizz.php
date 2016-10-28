@@ -1,12 +1,46 @@
 <?php
 include "Templates/headQuizz.php";
+
+// Retrouver la question à afficher
 !isset($_SESSION['quizz']) ? $_SESSION['quizz']['current'] = 0 : "";
-$current = $_SESSION['quizz']['current'];
-//debug($_SESSION);
-//killSession();
-?>
-<?php
-if ($current === 0) {
+if(isset($_GET['question'])){
+    $current = $_GET['question'];
+    $_SESSION['quizz']['current'] = $_GET['question'];
+}
+$current = !isset($_SESSION['quizz']['current']) ? 0 : $_SESSION['quizz']['current'];
+
+// Empêcher l'utilisateur de sauter des questions
+if ($current != 0) {
+    if (empty($_SESSION['forms']['quizz0']['nom']['value']) && $current > 0) {
+        $_SESSION['quizz']['current'] = 0;
+        $_SESSION['forms']['quizz0']['nom']['errors'][] = "Vous ne pouvez pas laisser ce champ vide !";
+        header("Location='quizz.php?question=0'");
+    } elseif (empty($_SESSION['forms']['quizz1']['origin']['value']) && $current > 1) {
+        $_SESSION['quizz']['current'] = 1;
+        $_SESSION['forms']['quizz1']['origin']['errors'][] = "Vous ne pouvez pas laisser ce champ vide !";
+        header("Location='quizz.php?question=1'");
+    } elseif (empty($_SESSION['forms']['quizz2']['chanteur']['is_selected']) && $current > 2) {
+        $_SESSION['quizz']['current'] = 2;
+        $_SESSION['forms']['quizz2']['chanteur']['errors'][] = "Vous ne pouvez pas laisser ce champ vide !";
+        header("Location='quizz.php?question=2'");
+    } elseif (empty($_SESSION['forms']['quizz3']['annee']['is_selected']) && $current > 3) {
+        $_SESSION['quizz']['current'] = 3;
+        $_SESSION['forms']['quizz3']['annee']['errors'][] = "Vous ne pouvez pas laisser ce champ vide !";
+        header("Location='quizz.php?question=3'");
+    } elseif ($current > 4 && !count($_SESSION['forms']['quizz4']['ville[]']['is_selected'])) {
+        $_SESSION['quizz']['current'] = 4;
+        $_SESSION['forms']['quizz4']['ville']['errors'][] = "Vous ne pouvez pas laisser ce champ vide !";
+        header("Location='quizz.php?question=4'");
+    }
+}
+
+// Si le quizz est fini
+if ($current === 5) {
+    header("Location: validation.php");
+}
+
+// Question 0
+if ($current == 0) {
     ?>
     <section>
         <h2>Début du Quizz</h2>
@@ -35,7 +69,12 @@ if ($current === 0) {
         </form>
     </section><!-- #contenu -->
     <?php
-} elseif ($current === 1) {
+} elseif ($current == 1) { // Question 1
+    if (empty($_SESSION['forms']['quizz0']['nom']['value'])) {
+        $_SESSION['quizz']['current'] = 0;
+        $_SESSION['forms']['quizz0']['nom']['errors'][] = "Vous ne pouvez pas laisser ce champ vide !";
+        header("Location='quizz.php?question=0'");
+    }
     ?>
     <section>
         <h2>Question 1</h2>
@@ -64,7 +103,7 @@ if ($current === 0) {
         </form>
     </section><!-- #contenu -->
     <?php
-} elseif ($current === 2) {
+} elseif ($current == 2) { // Question 2
     ?>
     <section>
         <h2>Question 2</h2>
@@ -86,7 +125,7 @@ if ($current === 0) {
                 );
                 // Create select: FormName, Type, Label, Name (Unique!),value, is required 
                 echo Select($formName, $chanteurLabel, $chanteurName, $chanteurValues, true);
-                
+
                 //Création du bouton submit :
                 $submitName = 'submit';
                 $submitText = 'Envoyer';
@@ -109,7 +148,7 @@ if ($current === 0) {
         </form>
     </section><!-- #contenu -->
     <?php
-} elseif ($current === 3) {
+} elseif ($current == 3) { // Question 3
     ?>
     <section>
         <h2>Question 3</h2>
@@ -130,7 +169,7 @@ if ($current === 0) {
                 $anneeName = "annee";
                 // Create radiobutton: FormName, Type, Label, Name (Unique!), array of value, is required
                 echo CheckboxOrRadiobutton($formName, $anneeType, $anneeLabel, $anneeName, $anneeValues, true);
-                
+
                 //Création du bouton submit :
                 $submitName = 'submit';
                 $submitText = 'Envoyer';
@@ -150,7 +189,7 @@ if ($current === 0) {
         </form>
     </section><!-- #contenu -->
     <?php
-} elseif ($current === 4) {
+} elseif ($current == 4) { // Question 4
     ?>
     <section>
         <h2>Question 4</h2>
@@ -162,7 +201,7 @@ if ($current === 0) {
                 $villeValues = array(
                     'Lausanne' => 'Lausanne',
                     'Genève' => 'Genève',
-                    'Zurich' => 'Zurich',
+                    'Zürich' => 'Zürich',
                     'Milan' => 'Milan',
                     'Vienne' => 'Vienne',
                     'Porto' => 'Porto'
@@ -172,8 +211,8 @@ if ($current === 0) {
                 $villeName = "ville[]";
                 // Create checkbox: FormName, Type, Label, Name (Unique!), array of value, is required
                 echo CheckboxOrRadiobutton($formName, $villeType, $villeLabel, $villeName, $villeValues, true);
-                
-                
+
+
                 //Création du bouton submit :
                 $submitName = 'submit';
                 $submitText = 'Envoyer';
@@ -193,13 +232,7 @@ if ($current === 0) {
         </form>
     </section><!-- #contenu -->
     <?php
-} elseif ($current === 5) {
-    header("Location:validation.php");
-}
-?>
-
-<?php
-debug($_SESSION);
+} 
 include "Templates/footer.php";
 ?>
 

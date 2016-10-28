@@ -22,7 +22,7 @@ function CheckText($formName, $frmEntry, $post) {
     // Stock la valeur si elle est remplie sinon message d'erreur
     if (!empty($_SESSION['forms'][$formName][$frmEntry]['posted_data'])) {
         $_SESSION['forms'][$formName][$frmEntry]['value'] = $_SESSION['forms'][$formName][$frmEntry]['posted_data'];
-    } elseif ($_SESSION['forms'][$formName][$frmEntry]['is_required']) {
+    } elseif ($_SESSION['forms'][$formName][$frmEntry]['is_required'] && empty ($_SESSION['forms'][$formName][$frmEntry]['value'])) {
         $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Veuillez entrer quelque chose";
         $_SESSION['forms'][$formName]['error'] = true;
     }
@@ -110,12 +110,15 @@ function CheckPassword($formName, $frmEntry, $post) {
 function CheckCheckbox($formName, $frmEntry, $post) {
     // Initialise le tableau des erreurs.
     $_SESSION['forms'][$formName][$frmEntry]['errors'] = array();
-
-    // (Ré)initialise le tableau des valeurs.
-    $_SESSION['forms'][$formName][$frmEntry]['is_selected'] = array();
-
+    
     // Probleme de checkbox, le nom à des [] mais pas le post !!!
     $frmEntryPostName = substr($frmEntry, 0, -2);
+    
+    // (Ré)initialise le tableau des valeurs.
+    $_SESSION['forms'][$formName][$frmEntry]['is_selected'] = isset($_SESSION['forms'][$formName][$frmEntry]['is_selected']) ? $_SESSION['forms'][$formName][$frmEntry]['is_selected'] : array();
+    if(isset($post[$frmEntryPostName])){
+        $_SESSION['forms'][$formName][$frmEntry]['is_selected'] = array();
+    }
 
     // Retrouve les valeures postées.
     $_SESSION['forms'][$formName][$frmEntry]['posted_data'] = isset($post[$frmEntryPostName]) ? $post[$frmEntryPostName] : array();
@@ -127,7 +130,7 @@ function CheckCheckbox($formName, $frmEntry, $post) {
                 $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Cette valeur n'existe pas !";
                 $_SESSION['forms'][$formName]['error'] = true;
             } else {
-                $_SESSION['forms'][$formName][$frmEntry]['is_selected'][] = $value;
+                $_SESSION['forms'][$formName][$frmEntry]['is_selected'][$value] = $value;
             }
         }
     }
@@ -149,8 +152,8 @@ function CheckMultipleChoice($formName, $frmEntry, $post) {
     // Initialise le tableau des erreurs.
     $_SESSION['forms'][$formName][$frmEntry]['errors'] = array();
 
-    // Initialise la valeur.
-    $_SESSION['forms'][$formName][$frmEntry]['is_selected'] = "";
+    // Initialise la valeur. /!\ Vider le is_selected génère des erreurs s'il est vérifier 2 fois sans rien posté la deuxième fois
+    $_SESSION['forms'][$formName][$frmEntry]['is_selected'] = isset($_SESSION['forms'][$formName][$frmEntry]['is_selected']) ? $_SESSION['forms'][$formName][$frmEntry]['is_selected'] : "";
 
     // Retrouve la valeur postée.
     $_SESSION['forms'][$formName][$frmEntry]['posted_data'] = isset($post[$frmEntry]) ? $post[$frmEntry] : "";
@@ -167,7 +170,7 @@ function CheckMultipleChoice($formName, $frmEntry, $post) {
     }
 
     // Si aucune valeur n'a été postée message d'erreur.
-    if (!isset($post[$frmEntry]) && $_SESSION['forms'][$formName][$frmEntry]['is_required'] || $value == "default") {
+    if (empty($_SESSION['forms'][$formName][$frmEntry]['is_selected']) && $_SESSION['forms'][$formName][$frmEntry]['is_required'] || $value == "default") {
         $_SESSION['forms'][$formName][$frmEntry]['errors'][] = "Veuillez sélectionner une valeur";
         $_SESSION['forms'][$formName]['error'] = true;
     }

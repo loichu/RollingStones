@@ -1,2 +1,4 @@
-Marie Bambelle;07.10.2008 8:21:27;Rollin' Stone;Mick Jagger;1961;Zürich, Milan, Vienne, Porto;
-Elie Coptaire;11.12.2008 23:19.15;Surnom de la copine de Mick;Charlie Watts;1963;Genève, Milan, Vienne, Porto;
+test4;"28.10.2016 16:44:34";test;KR;1963;Porto
+test4;"28.10.2016 16:46:49";test;KR;1963;Porto
+LoÃ¯c;"28.10.2016 16:51:20";"Rollin Stone";MJ;1961;"ZÃ¼rich, Milan, Vienne"
+;"28.10.2016 16:52:47";;;;

@@ -1,5 +1,6 @@
 <?php
 include "Templates/headMain.php";
+//killSession();
 ?>
 
 <!-- fin des menus -->

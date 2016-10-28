@@ -24,7 +24,7 @@ function CheckboxOrRadiobutton($frmName, $fieldType, $fieldLabel, $fieldName, $f
     foreach ($fieldValues as $value => $text) {
         $field .= "\t\t<label><input type='$fieldType' name='$fieldName' value='$value'";
         if($fieldType == "checkbox"){
-            $field .= (is_array($isSelected) && is_int(array_search($value, $isSelected))) ? 'checked="checked"' : "";
+            $field .= (is_array($isSelected) && array_search($value, $isSelected)) ? 'checked="checked"' : "";
         } else {
             $field .= $isSelected == $value ? 'checked="checked"' : "";
         }

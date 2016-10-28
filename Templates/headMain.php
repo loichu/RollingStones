@@ -23,14 +23,13 @@ include "Tools/HTMLtools.php";
                     Site de fan's des Rolling Stones
                 </h1>
                 <p class="sous-titre">
-                    Accueil
+                    <a href="index.php">Accueil</a>
                 </p>
             </header><!-- #entete -->
 <!-- debut du menu -->
             <nav>
  <!-- menu si l'utilisateur n'est pas identifié -->
                 <?php
-                debug($_SESSION);
                 if(!($_SESSION['auth']['is_identified'])){
                     $name = isset($_SESSION['auth']['name']) ? $_SESSION['auth']['name'] : "";
                     if(isset($_SESSION['auth']['error'])){
