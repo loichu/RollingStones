@@ -35,6 +35,8 @@ include "Tools/HTMLtools.php";
                     if(isset($_SESSION['auth']['error'])){
                         echo $_SESSION['auth']['error'] ? $_SESSION['auth']['error'] : "";
                     }
+                
+                $_SESSION['auth']['error'] = "";
                 ?>
                 <!-- afficher un message d'erreur si l'identification n'est pas correcte -->
                 <ul>

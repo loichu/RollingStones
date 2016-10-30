@@ -1,11 +1,11 @@
 <?php
 include "Templates/headQuizz.php";
-debug($_SESSION);
+//debug($_SESSION);
 ?>
 <section>
     <h2>Validation de vos réponses</h2>
     <form method="post" action='enregistrement.php'>
-        <p>Vous avez donné les réponses suivantes. Si vous désirez 
+        <p>Vous avez donné les réponses suivantes. Si vous désirez
             modifier vos réponses, c'est le dernier moment...</p>
         <table>
             <tr>
@@ -14,7 +14,7 @@ debug($_SESSION);
             </tr>
             <tr>
                 <td></td>
-                <td><?=$_SESSION['forms']['quizz0']['nom']['value']?></td>
+                <td><?=!empty($_SESSION['forms']['quizz0']['nom']['value']) ? $_SESSION['forms']['quizz0']['nom']['value'] : "Aucune réponse"?></td>
             </tr>
             <tr>
                 <td><a href="quizz.php?question=1">Question 1</a></td>
@@ -22,7 +22,7 @@ debug($_SESSION);
             </tr>
             <tr>
                 <td></td>
-                <td><?=$_SESSION['forms']['quizz1']['origin']['value']?></td>
+                <td><?=!empty($_SESSION['forms']['quizz1']['origin']['value']) ? $_SESSION['forms']['quizz1']['origin']['value'] : "Aucune réponse"?></td>
             </tr>
             <tr>
                 <td><a href="quizz.php?question=2">Question 2</a></td>
@@ -30,7 +30,7 @@ debug($_SESSION);
             </tr>
             <tr>
                 <td></td>
-                <td><?=$_SESSION['forms']['quizz2']['chanteur']['values'][$_SESSION['forms']['quizz2']['chanteur']['is_selected']]?></td>
+                <td><?=!empty($_SESSION['forms']['quizz2']['chanteur']['values'][$_SESSION['forms']['quizz2']['chanteur']['is_selected']]) ? $_SESSION['forms']['quizz2']['chanteur']['values'][$_SESSION['forms']['quizz2']['chanteur']['is_selected']] : "Aucune réponse"?></td>
             </tr>
             <tr>
                 <td><a href="quizz.php?question=3">Question 3</a></td>
@@ -38,7 +38,7 @@ debug($_SESSION);
             </tr>
             <tr>
                 <td></td>
-                <td><?=$_SESSION['forms']['quizz3']['annee']['is_selected']?></td>
+                <td><?=!empty($_SESSION['forms']['quizz3']['annee']['is_selected']) ? $_SESSION['forms']['quizz3']['annee']['is_selected'] : "Aucune réponse"?></td>
             </tr>
             <tr>
                 <td><a href="quizz.php?question=4">Question 4</a></td>
@@ -47,7 +47,7 @@ debug($_SESSION);
             <tr>
                 <td></td>
                 <td>
-                    <?=implode(", ", $_SESSION['forms']['quizz4']['ville[]']['is_selected']);?>
+                    <?=!empty($_SESSION['forms']['quizz4']['ville[]']['is_selected']) ? implode(", ", $_SESSION['forms']['quizz4']['ville[]']['is_selected']) : "Aucune réponse";?>
                 </td>
             </tr>
             <tr>
@@ -61,4 +61,3 @@ debug($_SESSION);
 <?php
 include "Templates/footer.php";
 ?>
-

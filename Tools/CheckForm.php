@@ -222,9 +222,7 @@ foreach ($_SESSION['forms'] as $formName => $formEntry) {
     $report = $_SESSION['forms'][$formName]['error'] == true ? "Il y a une faute quelque part dans $formName !" : "Tout juste pour $formName !";
     echo $report;
 }
-if (!$_SESSION['forms'][$formName]['error']) {
-    $_SESSION['quizz']['current'] ++;
-}
+$_SESSION['quizz']['current'] ++;
 header("Location:../quizz.php");
 // Debug
 debug($_POST, "POST:");

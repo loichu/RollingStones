@@ -1,6 +1,7 @@
 <?php
 include "Templates/headMain.php";
-//killSession();
+unset($_SESSION['forms']);
+debug($_SESSION);
 ?>
 
 <!-- fin des menus -->

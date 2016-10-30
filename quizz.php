@@ -10,7 +10,7 @@ if(isset($_GET['question'])){
 $current = !isset($_SESSION['quizz']['current']) ? 0 : $_SESSION['quizz']['current'];
 
 // Empêcher l'utilisateur de sauter des questions
-if ($current != 0) {
+/*if ($current != 0) {
     if (empty($_SESSION['forms']['quizz0']['nom']['value']) && $current > 0) {
         $_SESSION['quizz']['current'] = 0;
         $_SESSION['forms']['quizz0']['nom']['errors'][] = "Vous ne pouvez pas laisser ce champ vide !";
@@ -32,7 +32,7 @@ if ($current != 0) {
         $_SESSION['forms']['quizz4']['ville']['errors'][] = "Vous ne pouvez pas laisser ce champ vide !";
         header("Location='quizz.php?question=4'");
     }
-}
+}*/
 
 // Si le quizz est fini
 if ($current === 5) {
@@ -52,7 +52,7 @@ if ($current == 0) {
                 $nomType = "text";
                 $nomLabel = "Quel est votre nom ?";
                 $nomName = "nom";
-                echo PasswordOrTextOrEmail($formName, $nomType, $nomLabel, $nomName, true);
+                echo PasswordOrTextOrEmail($formName, $nomType, $nomLabel, $nomName, false);
 
                 //Création du bouton submit :
                 $submitName = 'submit';
@@ -86,7 +86,7 @@ if ($current == 0) {
                 $originType = "text";
                 $originLabel = "Quel est l'origine du nom Rolling Stones (C'est le nom d'une chanson) ?";
                 $originName = "origin";
-                echo PasswordOrTextOrEmail($formName, $originType, $originLabel, $originName, true);
+                echo PasswordOrTextOrEmail($formName, $originType, $originLabel, $originName, false);
 
                 //Création du bouton submit :
                 $submitName = 'submit';
@@ -124,7 +124,7 @@ if ($current == 0) {
                     'CW' => 'Charlie Watts'
                 );
                 // Create select: FormName, Type, Label, Name (Unique!),value, is required 
-                echo Select($formName, $chanteurLabel, $chanteurName, $chanteurValues, true);
+                echo Select($formName, $chanteurLabel, $chanteurName, $chanteurValues, false);
 
                 //Création du bouton submit :
                 $submitName = 'submit';
@@ -168,7 +168,7 @@ if ($current == 0) {
                 $anneeLabel = "Radiobutton";
                 $anneeName = "annee";
                 // Create radiobutton: FormName, Type, Label, Name (Unique!), array of value, is required
-                echo CheckboxOrRadiobutton($formName, $anneeType, $anneeLabel, $anneeName, $anneeValues, true);
+                echo CheckboxOrRadiobutton($formName, $anneeType, $anneeLabel, $anneeName, $anneeValues, FALSE);
 
                 //Création du bouton submit :
                 $submitName = 'submit';
@@ -210,7 +210,7 @@ if ($current == 0) {
                 $villeLabel = "Checkbox";
                 $villeName = "ville[]";
                 // Create checkbox: FormName, Type, Label, Name (Unique!), array of value, is required
-                echo CheckboxOrRadiobutton($formName, $villeType, $villeLabel, $villeName, $villeValues, true);
+                echo CheckboxOrRadiobutton($formName, $villeType, $villeLabel, $villeName, $villeValues, FALSE);
 
 
                 //Création du bouton submit :
@@ -233,6 +233,7 @@ if ($current == 0) {
     </section><!-- #contenu -->
     <?php
 } 
+debug($_SESSION);
 include "Templates/footer.php";
 ?>
 
